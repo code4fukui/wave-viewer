@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
+<title>河和田小学校のテーマ</title>
+</head><body>
+<h1>河和田小学校のテーマ</h1>
+
+<main id=main></main>
+<div id=div_lyric></div>
+
+<hr>
+MUSIC: 河和田小学校のテーマ (<a href=theme-of-kawada-elementary-school.mp3>MP3</a> / <a href=theme-of-kawada-elementary-school.csv>歌詞</a>) CC BY Code for FUKUI powered by <a href=https://suno.com/>SUNO</a><br>
+<a href=https://github.com/IchigoJam/wave-viewer/>src on GitHub</a><br>
+
+
+<script type="module">
+import { WaveViewer } from "./wave-viewer.js";
+import { CSV } from "https://js.sabae.cc/CSV.js";
+
+const wav = await (await fetch("./theme-of-kawada-elementary-school.mp3")).bytes();
+const viewer = new WaveViewer(); 
+viewer.load(wav);
+main.appendChild(viewer);
+
+const lyric = await CSV.fetchJSON("./theme-of-kawada-elementary-school.csv");
+lyric.forEach(i => i.t = parseFloat(i.t));
+console.log(lyric);
+const drawLyric = () => {
+  const t = viewer.currentTime;
+  let s = "";
+  for (let i = 0; i < lyric.length; i++) {
+    const start = lyric[i].t;
+    const end = i < lyric.length - 1 ? lyric[i + 1].t : 10000;
+    if (t > start && t < end) {
+      s = lyric[i].lyric;
+    }
+  }
+  div_lyric.textContent = s;
+  requestAnimationFrame(drawLyric);
+};
+drawLyric();
+
+</script>
+
+<style>
+body {
+  font-family: sans-serif;
+  text-align: center;
+}
+a {
+  color: gray;
+}
+wave-viewer {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+#div_lyric {
+  text-align: center;
+  padding: 1vw;
+  height: 1.5em;
+  font-size: 6vw;
+}
+</style>
+
+</body></html>
