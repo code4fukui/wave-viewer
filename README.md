@@ -1,4 +1,4 @@
-# wave-viweer
+# wave-viewer
 
 wive-viewer is a tag to view and play a wave file
 
@@ -13,5 +13,5 @@ import { WaveViewer } from "https://code4fukui.github.io/wave-viewer/wave-viewer
 
 const viewer = new WaveViewer();
 viewer.load(wav);
-document.body.appendChild(vieweer);
+document.body.appendChild(viewer);
 ```
