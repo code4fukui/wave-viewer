@@ -63,14 +63,8 @@ export class WaveViewer extends HTMLElement {
           //const currentTime = this.audioCtx.currentTime - this.startTime + this.playStartOffset;
           this.play(this.playStartOffset);
         }
-        this.render();
       } else if (e.code == "Escape") {
-        if (this.source) {
-          this.source.stop();
-          this.source = null;
-        }
-        this.playStartOffset = 0;
-        this.render();
+        this.stop();
       } else if (e.code == "ArrowRight") {
         const visibleSamples = this.audioBuffer.length / this.zoom;
         this.offset = Math.min(this.offset + visibleSamples / 10, this.audioBuffer.length - visibleSamples);
@@ -106,6 +100,7 @@ export class WaveViewer extends HTMLElement {
     this.scrollbar.disabled = this.maxOffset == 0;
   }
   async load(file) {
+    this.stop();
     const arrayBuffer = file instanceof Uint8Array ? file.buffer : await file.arrayBuffer();
     this.audioBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
     this.updateScrollbar();
@@ -208,6 +203,14 @@ export class WaveViewer extends HTMLElement {
 
     this.render();
   }
+  stop() {
+    if (this.source) {
+      this.source.stop();
+      this.source = null;
+    }
+    this.playStartOffset = 0;
+    this.render();
+  }
   get currentTime() {
     if (this.source) {
       const currentTime = this.audioCtx.currentTime - this.startTime + this.playStartOffset;
@@ -219,6 +222,9 @@ export class WaveViewer extends HTMLElement {
   toggleMute() {
     this.muted = !this.muted;
     this.gainNode.gain.value = this.muted ? 0 : 1;
+  }
+  isPlaying() {
+    return this.source != null;
   }
 }
 
