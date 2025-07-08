@@ -2,6 +2,7 @@ export class WaveViewer extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this.style.display = "block";
     this.canvas = document.createElement("canvas");
     this.shadowRoot.appendChild(this.canvas);
     this.scrollbar = document.createElement("input");
