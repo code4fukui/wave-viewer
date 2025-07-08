@@ -5,6 +5,7 @@
 
 <main id=main></main>
 <div id=div_lyric></div>
+<button id=btn>PLAY</button>
 
 <hr>
 MUSIC: 河和田小学校のテーマ (<a href=theme-of-kawada-elementary-school.mp3>MP3</a> / <a href=theme-of-kawada-elementary-school.csv>歌詞</a>) CC BY Code for FUKUI powered by <a href=https://suno.com/>SUNO</a><br>
@@ -37,6 +38,10 @@ const drawLyric = () => {
   requestAnimationFrame(drawLyric);
 };
 drawLyric();
+
+btn.onclick = () => {
+  viewer.play();
+};
 
 </script>
 

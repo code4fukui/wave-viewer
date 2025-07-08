@@ -21,7 +21,6 @@ export class WaveViewer extends HTMLElement {
 
     this.zoom = 1;
     this.offset = 0;
-    this.startpos = 0;
     this.startTime = 0;
     this.playStartOffset = 0;
 
@@ -101,6 +100,10 @@ export class WaveViewer extends HTMLElement {
   }
   async load(file) {
     this.stop();
+    this.zoom = 1;
+    this.offset = 0;
+    this.startTime = 0;
+    this.playStartOffset = 0;
     const arrayBuffer = file instanceof Uint8Array ? file.buffer : await file.arrayBuffer();
     this.audioBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
     this.updateScrollbar();
@@ -188,7 +191,7 @@ export class WaveViewer extends HTMLElement {
     if (this.source) this.source.stop();
   }
 
-  play(startTime) {
+  play(startTime = 0) {
     if (this.source) {
       this.source.stop();
     }
