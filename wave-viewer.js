@@ -18,6 +18,7 @@ export class WaveViewer extends HTMLElement {
     this.ctx = this.canvas.getContext("2d");
     this.audioCtx = new AudioContext();
     this.gainNode = this.audioCtx.createGain();
+    this.gainNode.connect(this.audioCtx.destination);
 
     this.zoom = 1;
     this.offset = 0;
@@ -196,7 +197,6 @@ export class WaveViewer extends HTMLElement {
       this.source.stop();
     }
     this.source = this.audioCtx.createBufferSource();
-    this.gainNode.connect(this.audioCtx.destination);
     this.source.buffer = this.audioBuffer;
     this.source.connect(this.gainNode);
     this.source.start(0, startTime);
