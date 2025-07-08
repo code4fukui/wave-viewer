@@ -1,4 +1,4 @@
-# wave-viweer
+# wave-viewer
 
 wive-viewer is a tag to view and play a wave file
 
